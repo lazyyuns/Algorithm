@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -20,23 +21,24 @@ public class Main{
       }
     }
     safeMax = 0;
-    makeWall(0);
+    makeWall(0, 0);
     System.out.println(safeMax);
   }
 
-  static void makeWall(int depth ){
+  static void makeWall(int depth, int start){
     if(depth == 3) {
       virus();
       return;
     };
 
-    for(int i = 0; i < N; i++){
-      for(int j = 0; j < M; j++){
-        if(map[i][j] == 0){
-          map[i][j] = 1;
-          makeWall(depth + 1);
-          map[i][j] = 0;
-        } 
+    for(int idx = start; idx < N * M; idx++){ // 조합 최적화 
+      int i = idx / M;
+      int j = idx % M;
+      if(map[i][j] == 0){
+        map[i][j] = 1;
+        makeWall(depth + 1, idx + 1);
+        map[i][j] = 0;
+        
       }
     }
   }
